@@ -3,7 +3,7 @@ import qrcode
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_mysqldb import MySQL
 
-qr = qrcode.make('https://qr.id.vin/hook?url=http://www.mocky.io/v2/5d73c486330000de34081890')
+qr = qrcode.make('https://qr.id.vin/hook?url=http://210.211.99.9:8889/?fbclid=IwAR3mp5ayyLGbFUHRzeB9lYw4NSM9mjJdAJ3GKanOmwadDfX_IdC_k98UJng')
 qr.save('test.png')
 
 qr1 = qrcode.QRCode(
@@ -31,7 +31,7 @@ tests = {
                 "label": "Gửi thông tin",
                 "background_color": "#6666ff",
                 "cta": "url",
-                "url": "http://a01ecd8e.ngrok.io"
+                "url": "http://210.211.99.9:8889/?fbclid=IwAR3mp5ayyLGbFUHRzeB9lYw4NSM9mjJdAJ3GKanOmwadDfX_IdC_k98UJng"
             },
             # "reset_button": {
             #     "label": "Xóa toàn bộ",
