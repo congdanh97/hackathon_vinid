@@ -148,10 +148,11 @@
                     </div>
 
 
-                <form action="{{ url_for('insert') }}" method="POST" >
-                    <input type="number" id="so_tien_click" name="so_tien" placeholder="Nhập Số Tiền Khác" >
-                    <textarea name="Message" id="loi_chuc" placeholder="Lời chúc" ></textarea>
-                    <input type="submit" value="Submit" class="button-w3layouts hvr-rectangle-out">
+                <form action="{{ url_for('insert1') }}" method="POST" >
+                    <input type="text" id="text_tien_click" name="so_tien" placeholder="Nhập Số Tiền Khác" >
+                    <input type="text"  name="ten" placeholder="Nhập Tên Người Gửi" >
+                    <textarea name="message" id="loi_chuc" placeholder="Lời chúc" ></textarea>
+                    <input type="submit" type="Submit" class="button-w3layouts hvr-rectangle-out">
                 </form>
             </div>
         </div>

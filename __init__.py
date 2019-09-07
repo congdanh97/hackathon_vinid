@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+
 import qrcode
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_mysqldb import MySQL
@@ -83,50 +84,17 @@ def api_all():
 
 app.secret_key = 'many random bytes'
 
-app.config['MYSQL_HOST'] = '210.211.99.9'
-app.config['MYSQL_USER'] = 'cuongdm9'
-app.config['MYSQL_PASSWORD'] = '123456c@'
-app.config['MYSQL_DB'] = 'coding_house'
+# app.config['MYSQL_HOST'] = '210.211.99.9'
+# app.config['MYSQL_USER'] = 'cuongdm9'
+# app.config['MYSQL_PASSWORD'] = '123456c@'
+# app.config['MYSQL_DB'] = 'coding_house'
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'Welcome1'
+app.config['MYSQL_DB'] = 'crud'
 
 mysql = MySQL(app)
 
-companies = {
-    "data": {
-        "metadata": {
-            "app_name": "Bot",
-            "app_id": 123456,
-            "title": "Nhập thông tin",
-            "submit_button": {
-                "label": "Gửi thông tin",
-                "background_color": "#6666ff",
-                "cta": "deeplink",
-                "url": "fb://profile/Invalid%20URL"
-            },
-            "reset_button": {
-                "label": "Xóa toàn bộ",
-                "background_color": "#669999"
-            },
-            "elements": [
-                {
-                    "type": "input",
-                    "input_type": "email",
-                    "label": "Email",
-                    "name": "email",
-                    "error": "Có lỗi xảy ra",
-                    "placeholder": "Nhập địa chỉ email "
-                },
-                {
-                    "type": "input",
-                    "input_type": "number",
-                    "label": "Phone",
-                    "name": "phone",
-                    "error": "Có lỗi xảy ra",
-                    "placeholder": "Phone"
-                }
-            ]
-        }
-    }
-}
 
 
 @app.route('/admin')  # admin
@@ -144,21 +112,24 @@ def new():
     return render_template('index.html')
 
 
-@app.route('/insert', methods=['POST'])
+@app.route('/insert1', methods=['POST'])
 def insert1():
     if request.method == "POST":
-        flash("Data Inserted Successfully")
-        name = request.form['name1']
-        email = request.form['email']
-        phone = request.form['phone']
-        cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO students (name, email, phone) VALUES (%s, %s, %s)", (name, email, phone))
-        # mysql.connection.commit()
 
-        cur1 = mysql.connection.cursor()
-        cur1.execute("INSERT INTO students (name, email, phone) VALUES (%s, %s, %s)", (name, email, phone))
+        tiengui = int(request.form['so_tien'])
+        loichuc = request.form['message']
+        tennguoigui = request.form['ten']
+        # cur1 = mysql.connection.cursor()
+        # cur1.execute("SELECT  * FROM students WHERE id=3")
+        # rows = []
+        # for row in cur1:
+        #     tienconlai=  tienconlai-row[1]
+
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO history_gift (name, monney_gift, comment ) VALUES (%s, %s, %s)", (tennguoigui, tiengui, loichuc))
         mysql.connection.commit()
-        return redirect(url_for('Index'))
+        flash("Data Inserted Successfully")
+        return redirect(url_for('new'))
 
 
 @app.route('/admin/insert', methods=['POST'])
@@ -204,4 +175,4 @@ def update():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='210.211.99.9', port='8889')
+    app.run(debug=True)#, host='210.211.99.9', port='8889')
