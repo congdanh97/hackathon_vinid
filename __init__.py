@@ -204,4 +204,4 @@ def update():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='210.211.99.9', port='2019')
+    app.run(debug=True, host='210.211.99.9', port='8889')
