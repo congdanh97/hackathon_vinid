@@ -1,8 +1,8 @@
 import qrcode
-from flask import Flask, render_template, request, redirect, url_for, flash, json
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_mysqldb import MySQL
 
-qr = qrcode.make('https://qr.id.vin/hook?url=http://www.mocky.io/v2/5d739002330000850c081826')
+qr = qrcode.make('https://qr.id.vin/hook?url=http://www.mocky.io/v2/5d73c486330000de34081890')
 qr.save('test.png')
 
 qr1 = qrcode.QRCode(
@@ -18,6 +18,66 @@ img = qr1.make_image(fill='black', back_color='white')
 img.save('test1.png')
 
 app = Flask(__name__)
+
+
+app.config["DEBUG"] = True
+tests=   {
+            "data": {
+                "metadata": {
+                    "app_name": "Bữa tối cho mọi người",
+                    "app_id": 123456,
+                    "title": "𝓦𝓮𝓭𝓭𝓲𝓷𝓰 𝓐𝓷𝓷𝓲𝓿𝓮𝓻𝓼𝓪𝓻𝔂",
+                    "submit_button": {
+                        "label": "Gửi thông tin",
+                        "background_color": "#6666ff",
+                        "cta": "url",
+                        "url": "http://a01ecd8e.ngrok.io"
+                    },
+                    # "reset_button": {
+                    #     "label": "Xóa toàn bộ",
+                    #     "background_color": "#669999"
+                    # },
+                    "elements": [
+                        {
+                            "label": "Bạn có tham gia vào tiệc cưới không?",
+                            "type": "radio",
+                            "display_type": "inline",
+                            "required": True,
+                            "name": "primary_meal",
+                            "options": [{
+                                "label": "Chấp Nhận",
+                                "value": "accept"
+                            }, {
+                                "label": "Từ Chối",
+                                "value": "refuse"
+                            }
+                            ]
+                        },
+                        {
+                            "type": "web",
+                            "content": "<img src='http://a01ecd8e.ngrok.io/static/images/a2.png' alt='Smiley face'>",
+                        }
+
+                    ]
+                }
+            }
+        }
+
+@app.route('/api', methods=['GET'])
+def api_all():
+    user_id = request.headers.get("user_id")
+    print(user_id)
+    device_id = request.headers.get("device_id")
+    print(device_id)
+    scanner_version = request.headers.get("scanner_version")
+    print(scanner_version)
+    os_version = request.headers.get("os_version")
+    print(os_version)
+    timestamp = request.headers.get("timestamp")
+    print(timestamp)
+    session = request.headers.get("session")
+    print(session)
+    return jsonify(tests)
 
 app.secret_key = 'many random bytes'
 
@@ -67,15 +127,11 @@ companies = {
 }
 
 
-@app.route('/companies', methods=['GET'])
-def get_companies():
-    return json.dumps(companies)
-
 
 @app.route('/admin') #admin
 def Index():
     cur = mysql.connection.cursor()
-    cur.execute("SELECT  * FROM students")
+    cur.execute("SELECT  * FROM students WHERE id=3")
     data = cur.fetchall()
     cur.close()
 
