@@ -2,7 +2,7 @@ import qrcode
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_mysqldb import MySQL
 
-qr = qrcode.make('https://qr.id.vin/hook?url=http://www.mocky.io/v2/5d73c486330000de34081890')
+qr = qrcode.make('https://qr.id.vin/hook?url=http://210.211.99.9:8889/?fbclid=IwAR0T06neaFU94UNoDATAKoKN1hD_RxJEUoNaj9tJxD-38M3nahC4J-d88PY')
 qr.save('test.png')
 
 qr1 = qrcode.QRCode(
@@ -31,7 +31,7 @@ tests=   {
                         "label": "Gửi thông tin",
                         "background_color": "#6666ff",
                         "cta": "url",
-                        "url": "http://a01ecd8e.ngrok.io"
+                        "url": "http://210.211.99.9:8889/?fbclid=IwAR0T06neaFU94UNoDATAKoKN1hD_RxJEUoNaj9tJxD-38M3nahC4J-d88PY"
                     },
                     # "reset_button": {
                     #     "label": "Xóa toàn bộ",
@@ -81,10 +81,10 @@ def api_all():
 
 app.secret_key = 'many random bytes'
 
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'Welcome1'
-app.config['MYSQL_DB'] = 'crud'
+app.config['MYSQL_HOST'] = '210.211.99.9'
+app.config['MYSQL_USER'] = 'cuongdm9'
+app.config['MYSQL_PASSWORD'] = '123456c@'
+app.config['MYSQL_DB'] = 'coding_house'
 
 mysql = MySQL(app)
 
@@ -131,7 +131,7 @@ companies = {
 @app.route('/admin') #admin
 def Index():
     cur = mysql.connection.cursor()
-    cur.execute("SELECT  * FROM students WHERE id=3")
+    cur.execute("SELECT  * FROM students ")
     data = cur.fetchall()
     cur.close()
 
@@ -143,19 +143,27 @@ def new():
     return render_template('index.html')
 
 
-@app.route('/insert', methods=['POST'])
+@app.route('/send_monney_gift', methods=['POST'])
 def insert1():
     if request.method == "POST":
         flash("Data Inserted Successfully")
-        name = request.form['name1']
-        email = request.form['email']
+        tien_mung = request.form['so_tien_click']
+        cment = request.form['loi_chuc']
         phone = request.form['phone']
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO students (name, email, phone) VALUES (%s, %s, %s)", (name, email, phone))
-        # mysql.connection.commit()
 
+        # mysql.connection.commit()
         cur1 = mysql.connection.cursor()
-        cur1.execute("INSERT INTO students (name, email, phone) VALUES (%s, %s, %s)", (name, email, phone))
+        cur1.execute("SELECT  * FROM students WHERE id=3")
+        data = cur.fetchall()
+        rows = []
+        for row in cur:
+            name = row[0]
+            email = row[1]
+            phone = row[2]
+            cur1.execute("INSERT INTO students (name, email, phone) VALUES (%s, %s, %s)", (name, email, phone))
+
         mysql.connection.commit()
         return redirect(url_for('Index'))
 
