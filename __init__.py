@@ -1,8 +1,9 @@
+# -*- encoding: utf-8 -*-
 import qrcode
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_mysqldb import MySQL
 
-qr = qrcode.make('https://qr.id.vin/hook?url=http://210.211.99.9:8889/?fbclid=IwAR0T06neaFU94UNoDATAKoKN1hD_RxJEUoNaj9tJxD-38M3nahC4J-d88PY')
+qr = qrcode.make('https://qr.id.vin/hook?url=http://www.mocky.io/v2/5d73c486330000de34081890')
 qr.save('test.png')
 
 qr1 = qrcode.QRCode(
@@ -19,49 +20,49 @@ img.save('test1.png')
 
 app = Flask(__name__)
 
-
 app.config["DEBUG"] = True
-tests=   {
-            "data": {
-                "metadata": {
-                    "app_name": "Bữa tối cho mọi người",
-                    "app_id": 123456,
-                    "title": "𝓦𝓮𝓭𝓭𝓲𝓷𝓰 𝓐𝓷𝓷𝓲𝓿𝓮𝓻𝓼𝓪𝓻𝔂",
-                    "submit_button": {
-                        "label": "Gửi thông tin",
-                        "background_color": "#6666ff",
-                        "cta": "url",
-                        "url": "http://210.211.99.9:8889/?fbclid=IwAR0T06neaFU94UNoDATAKoKN1hD_RxJEUoNaj9tJxD-38M3nahC4J-d88PY"
-                    },
-                    # "reset_button": {
-                    #     "label": "Xóa toàn bộ",
-                    #     "background_color": "#669999"
-                    # },
-                    "elements": [
-                        {
-                            "label": "Bạn có tham gia vào tiệc cưới không?",
-                            "type": "radio",
-                            "display_type": "inline",
-                            "required": True,
-                            "name": "primary_meal",
-                            "options": [{
-                                "label": "Chấp Nhận",
-                                "value": "accept"
-                            }, {
-                                "label": "Từ Chối",
-                                "value": "refuse"
-                            }
-                            ]
-                        },
-                        {
-                            "type": "web",
-                            "content": "<img src='http://a01ecd8e.ngrok.io/static/images/a2.png' alt='Smiley face'>",
-                        }
-
+tests = {
+    "data": {
+        "metadata": {
+            "app_name": "Bữa tối cho mọi người",
+            "app_id": 123456,
+            "title": "𝓦𝓮𝓭𝓭𝓲𝓷𝓰 𝓐𝓷𝓷𝓲𝓿𝓮𝓻𝓼𝓪𝓻𝔂",
+            "submit_button": {
+                "label": "Gửi thông tin",
+                "background_color": "#6666ff",
+                "cta": "url",
+                "url": "http://a01ecd8e.ngrok.io"
+            },
+            # "reset_button": {
+            #     "label": "Xóa toàn bộ",
+            #     "background_color": "#669999"
+            # },
+            "elements": [
+                {
+                    "label": "Bạn có tham gia vào tiệc cưới không?",
+                    "type": "radio",
+                    "display_type": "inline",
+                    "required": True,
+                    "name": "primary_meal",
+                    "options": [{
+                        "label": "Chấp Nhận",
+                        "value": "accept"
+                    }, {
+                        "label": "Từ Chối",
+                        "value": "refuse"
+                    }
                     ]
+                },
+                {
+                    "type": "web",
+                    "content": "<img src='http://a01ecd8e.ngrok.io/static/images/a2.png' alt='Smiley face'>",
                 }
-            }
+
+            ]
         }
+    }
+}
+
 
 @app.route('/api', methods=['GET'])
 def api_all():
@@ -78,6 +79,7 @@ def api_all():
     session = request.headers.get("session")
     print(session)
     return jsonify(tests)
+
 
 app.secret_key = 'many random bytes'
 
@@ -127,43 +129,34 @@ companies = {
 }
 
 
-
-@app.route('/admin') #admin
+@app.route('/admin')  # admin
 def Index():
     cur = mysql.connection.cursor()
-    cur.execute("SELECT  * FROM students ")
+    cur.execute("SELECT  * FROM students WHERE id=3")
     data = cur.fetchall()
     cur.close()
 
     return render_template('index2.html', students=data)
 
 
-@app.route('/') #index /
+@app.route('/')  # index /
 def new():
     return render_template('index.html')
 
 
-@app.route('/send_monney_gift', methods=['POST'])
+@app.route('/insert', methods=['POST'])
 def insert1():
     if request.method == "POST":
         flash("Data Inserted Successfully")
-        tien_mung = request.form['so_tien_click']
-        cment = request.form['loi_chuc']
+        name = request.form['name1']
+        email = request.form['email']
         phone = request.form['phone']
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO students (name, email, phone) VALUES (%s, %s, %s)", (name, email, phone))
-
         # mysql.connection.commit()
-        cur1 = mysql.connection.cursor()
-        cur1.execute("SELECT  * FROM students WHERE id=3")
-        data = cur.fetchall()
-        rows = []
-        for row in cur:
-            name = row[0]
-            email = row[1]
-            phone = row[2]
-            cur1.execute("INSERT INTO students (name, email, phone) VALUES (%s, %s, %s)", (name, email, phone))
 
+        cur1 = mysql.connection.cursor()
+        cur1.execute("INSERT INTO students (name, email, phone) VALUES (%s, %s, %s)", (name, email, phone))
         mysql.connection.commit()
         return redirect(url_for('Index'))
 
@@ -211,4 +204,4 @@ def update():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='210.211.99.9', port='8889')
