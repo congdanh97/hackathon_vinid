@@ -84,14 +84,14 @@ def api_all():
 
 app.secret_key = 'many random bytes'
 
-# app.config['MYSQL_HOST'] = '210.211.99.9'
-# app.config['MYSQL_USER'] = 'cuongdm9'
-# app.config['MYSQL_PASSWORD'] = '123456c@'
-# app.config['MYSQL_DB'] = 'coding_house'
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'Welcome1'
-app.config['MYSQL_DB'] = 'crud'
+app.config['MYSQL_HOST'] = '210.211.99.9'
+app.config['MYSQL_USER'] = 'cuongdm9'
+app.config['MYSQL_PASSWORD'] = '123456c@'
+app.config['MYSQL_DB'] = 'coding_house'
+# app.config['MYSQL_HOST'] = 'localhost'
+# app.config['MYSQL_USER'] = 'root'
+# app.config['MYSQL_PASSWORD'] = 'Welcome1'
+# app.config['MYSQL_DB'] = 'crud'
 
 mysql = MySQL(app)
 
@@ -175,4 +175,4 @@ def update():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)#, host='210.211.99.9', port='8889')
+    app.run(debug=True, host='210.211.99.9', port='8889')
