@@ -75,15 +75,18 @@ form_data_tr1 = {
                     "required": True,
                     "name": "money",
                     "options": [{
-                        "label": "200",
-                        "value": 200
+                        "label": "200.000 vnd",
+                        "value": 200000
                     }, {
-                        "label": "300",
-                        "value": 300
+                        "label": "300.000 vnd",
+                        "value": 300000
                     }, {
-                        "label": "500",
-                        "value": 500
-                    }
+                        "label": "500.000 vnd",
+                        "value": 500000
+                    }, {
+                            "label": "9999999 vnd",
+                            "value": 999999
+                        }
                     ]
                 },
                 {
