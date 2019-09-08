@@ -43,7 +43,7 @@ form_data_tr1 = {
             "elements": [
                 {
                     "type": "web",
-                    "content": "<img src='http://210.211.99.9:8889/static/images/a2.png' alt='Smiley face'>",
+                    "content": "<img src='http://210.211.99.9:8889/static/images/wedding.png' alt='Smiley face'>",
                 },
                 {
                     "label": "Tên người mừng tiền?",
@@ -117,14 +117,14 @@ form_data_tr2 = {
             "elements": [
                 {
                     "type": "web",
-                    "content": "<img src='http://210.211.99.9:8889/static/images/a2.png' alt='Smiley face'>",
+                    "content": "<img src='http://210.211.99.9:8889/static/images/thankyou.jpeg' alt='Smiley face'>",
                 },
                 {
                     "label": "",
                     "type": "input",
                     "input_type": "textarea",
                     "display_type": "inline",
-                    "required": True,
+                    "required": False,
                     "name": "message"
                 }
             ]
