@@ -121,7 +121,7 @@ form_data_tr2 = {
                     "type": "input",
                     "input_type": "textarea",
                     "display_type": "inline",
-                    "required": True,
+                    "required": False,
                     "name": "message"
                 }
             ]
