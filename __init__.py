@@ -21,6 +21,13 @@ img.save('test1.png')
 app = Flask(__name__)
 
 app.config["DEBUG"] = True
+app.secret_key = 'many random bytes'
+app.config['MYSQL_HOST'] = '210.211.99.9'
+app.config['MYSQL_USER'] = 'cuongdm9'
+app.config['MYSQL_PASSWORD'] = '123456c@'
+app.config['MYSQL_DB'] = 'coding_house'
+mysql = MySQL(app)
+
 form_data_tr1 = {
     "data": {
         "metadata": {
@@ -114,7 +121,8 @@ form_data_tr2 = {
     }
 }
 
-@app.route('/api', methods=['GET'])
+
+@app.route('/start', methods=['GET'])
 def api_all():
     user_id = request.headers.get("user_id")
     print(user_id)
@@ -129,15 +137,6 @@ def api_all():
     session = request.headers.get("session")
     print(session)
     return jsonify(form_data_tr1)
-
-
-app.secret_key = 'many random bytes'
-
-app.config['MYSQL_HOST'] = '210.211.99.9'
-app.config['MYSQL_USER'] = 'cuongdm9'
-app.config['MYSQL_PASSWORD'] = '123456c@'
-app.config['MYSQL_DB'] = 'coding_house'
-mysql = MySQL(app)
 
 
 @app.route('/admin')  # admin
@@ -211,4 +210,4 @@ def update():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)  # , host='210.211.99.9', port='8889')
+    app.run(debug=True, host='0.0.0.0', port='8889')
