@@ -115,6 +115,14 @@ form_data_tr2 = {
                 {
                     "type": "web",
                     "content": "<img src='http://210.211.99.9:8889/static/images/a2.png' alt='Smiley face'>",
+                },
+                {
+                    "label": "",
+                    "type": "input",
+                    "input_type": "textarea",
+                    "display_type": "inline",
+                    "required": True,
+                    "name": "message"
                 }
             ]
         }
