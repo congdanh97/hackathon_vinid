@@ -3002,9 +3002,9 @@ select[multiple].input-lg {
 }
 .btn {
   display: inline-block;
-  padding: 10px 24px;
-  margin-bottom: 9px;
-  font-size: 17px;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
   font-weight: normal;
   line-height: 1.42857143;
   text-align: center;
@@ -3019,7 +3019,7 @@ select[multiple].input-lg {
           user-select: none;
   background-image: none;
   border: 1px solid transparent;
-  border-radius: 27px;
+  border-radius: 4px;
 }
 .btn:focus,
 .btn:active:focus,
