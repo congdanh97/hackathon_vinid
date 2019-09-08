@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-
 import qrcode
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_mysqldb import MySQL
@@ -22,29 +21,37 @@ img.save('test1.png')
 app = Flask(__name__)
 
 app.config["DEBUG"] = True
-tests = {
+form_data_tr1 = {
     "data": {
         "metadata": {
-            "app_name": "Bữa tối cho mọi người",
+            "app_name": "Congratulation Wedding",
             "app_id": 123456,
             "title": "𝓦𝓮𝓭𝓭𝓲𝓷𝓰 𝓐𝓷𝓷𝓲𝓿𝓮𝓻𝓼𝓪𝓻𝔂",
             "submit_button": {
                 "label": "Gửi thông tin",
                 "background_color": "#6666ff",
-                "cta": "url",
-                "url": "http://210.211.99.9:8889"
+                "cta": "request",
+                "url": "http://210.211.99.9:8889/add_data",
             },
-            # "reset_button": {
-            #     "label": "Xóa toàn bộ",
-            #     "background_color": "#669999"
-            # },
             "elements": [
+                {
+                    "type": "web",
+                    "content": "<img src='http://210.211.99.9:8889/static/images/a2.png' alt='Smiley face'>",
+                },
+                {
+                    "label": "Tên người mừng tiền?",
+                    "type": "input",
+                    "input_type": "textarea",
+                    "display_type": "inline",
+                    "required": True,
+                    "name": "name_joiner"
+                },
                 {
                     "label": "Bạn có tham gia vào tiệc cưới không?",
                     "type": "radio",
                     "display_type": "inline",
                     "required": True,
-                    "name": "primary_meal",
+                    "name": "joined",
                     "options": [{
                         "label": "Chấp Nhận",
                         "value": "accept"
@@ -55,15 +62,57 @@ tests = {
                     ]
                 },
                 {
-                    "type": "web",
-                    "content": "<img src='http://210.211.99.9:8889/static/images/a2.png' alt='Smiley face'>",
-                }
-
+                    "label": "Bạn muốn mừng bao nhiêu tiền?",
+                    "type": "radio",
+                    "display_type": "inline",
+                    "required": True,
+                    "name": "money",
+                    "options": [{
+                        "label": "200",
+                        "value": 200
+                    }, {
+                        "label": "300",
+                        "value": 300
+                    }, {
+                        "label": "500",
+                        "value": 500
+                    }
+                    ]
+                },
+                {
+                    "label": "Lời chúc!",
+                    "type": "input",
+                    "input_type": "textarea",
+                    "display_type": "inline",
+                    "required": True,
+                    "name": "message"
+                },
             ]
         }
     }
 }
 
+form_data_tr2 = {
+    "data": {
+        "metadata": {
+            "app_name": "Congratulation Wedding",
+            "app_id": 123456,
+            "title": "Gia đình chúng tôi rắt cảm ơn!",
+            "submit_button": {
+                "label": "Thêm thông tin",
+                "background_color": "#6666ff",
+                "cta": "url",
+                "url": "http://210.211.99.9:8889",
+            },
+            "elements": [
+                {
+                    "type": "web",
+                    "content": "<img src='http://210.211.99.9:8889/static/images/a2.png' alt='Smiley face'>",
+                }
+            ]
+        }
+    }
+}
 
 @app.route('/api', methods=['GET'])
 def api_all():
@@ -79,7 +128,7 @@ def api_all():
     print(timestamp)
     session = request.headers.get("session")
     print(session)
-    return jsonify(tests)
+    return jsonify(form_data_tr1)
 
 
 app.secret_key = 'many random bytes'
@@ -88,13 +137,7 @@ app.config['MYSQL_HOST'] = '210.211.99.9'
 app.config['MYSQL_USER'] = 'cuongdm9'
 app.config['MYSQL_PASSWORD'] = '123456c@'
 app.config['MYSQL_DB'] = 'coding_house'
-# app.config['MYSQL_HOST'] = 'localhost'
-# app.config['MYSQL_USER'] = 'root'
-# app.config['MYSQL_PASSWORD'] = 'Welcome1'
-# app.config['MYSQL_DB'] = 'crud'
-
 mysql = MySQL(app)
-
 
 
 @app.route('/admin')  # admin
@@ -103,7 +146,6 @@ def Index():
     cur.execute("SELECT  * FROM students WHERE id=3")
     data = cur.fetchall()
     cur.close()
-
     return render_template('index2.html', students=data)
 
 
@@ -112,24 +154,18 @@ def new():
     return render_template('index.html')
 
 
-@app.route('/insert1', methods=['POST'])
+@app.route('/add_data', methods=['POST'])
 def insert1():
     if request.method == "POST":
-
-        tiengui = int(request.form['so_tien'])
-        loichuc = request.form['message']
-        tennguoigui = request.form['ten']
-        # cur1 = mysql.connection.cursor()
-        # cur1.execute("SELECT  * FROM students WHERE id=3")
-        # rows = []
-        # for row in cur1:
-        #     tienconlai=  tienconlai-row[1]
-
+        tiengui = int(request.json['money'])
+        loichuc = request.json['message']
+        tennguoigui = request.json['name_joiner']
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO history_gift (name, monney_gift, comment ) VALUES (%s, %s, %s)", (tennguoigui, tiengui, loichuc))
+        cur.execute("INSERT INTO history_gift (name, monney_gift, comment ) VALUES (%s, %s, %s)",
+                    (tennguoigui, tiengui, loichuc))
         mysql.connection.commit()
         flash("Data Inserted Successfully")
-        return redirect(url_for('new'))
+        return jsonify(form_data_tr2)
 
 
 @app.route('/admin/insert', methods=['POST'])
@@ -175,4 +211,4 @@ def update():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='210.211.99.9', port='8889')
+    app.run(debug=True)  # , host='210.211.99.9', port='8889')

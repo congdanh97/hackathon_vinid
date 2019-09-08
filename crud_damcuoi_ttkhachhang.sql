@@ -32,7 +32,7 @@ CREATE TABLE `ttkhachhang` (
   `email` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
   `monney_amount` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `students`
@@ -79,29 +79,26 @@ ALTER TABLE `ttkhachhang`
 --
 
 CREATE TABLE `history_gift` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL ,
   `name` varchar(255) NOT NULL,
---  `email` varchar(255) NOT NULL,
---  `phone` varchar(255) NOT NULL,
-  `monney_gift` varchar(255) NOT NULL,
+  `monney_gift` int(11) NOT NULL,
   `comment` varchar(255)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `students`
 --
 
---INSERT INTO `history_gift` (`id`, `name`, `email`, `phone`,`monney_amount`,`comment`) VALUES
---(3, 'Parwiz', '009378976767','5000000',""),
---(4, 'John Doe', '999999999','5000000',""),
---(5, 'Karimja', '7333392','5000000',""),
---(6, 'Jamal', '3434343','5000000',""),
---(7, 'Nawid', '343434','5000000',""),
---(8, 'Tom Logan', '7347374347','5000000',""),
---(12, 'Tom Logan', '11111111111','5000000',""),
---(13, 'Fawad', '347374837483','5000000',""),
---(14, 'Wahid', '4354354345','5000000',"");
-
+INSERT INTO `history_gift` (`id`, `name`, `monney_gift`,`comment`) VALUES
+(3, 'Parwiz','5000000',""),
+(4, 'John Doe','5000000',""),
+(5, 'Karimja','5000000',""),
+(6, 'Jamal','5000000',""),
+(7, 'Nawid','5000000',""),
+(8, 'Tom Logan','5000000',""),
+(12, 'Tom Logan','5000000',""),
+(13, 'Fawad','5000000',""),
+(14, 'Wahid','5000000',"");
 --
 -- Indexes for dumped tables
 --
@@ -110,7 +107,7 @@ CREATE TABLE `history_gift` (
 -- Indexes for table `students`
 --
 ALTER TABLE `history_gift`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) ;
 
 --
 -- AUTO_INCREMENT for dumped tables
